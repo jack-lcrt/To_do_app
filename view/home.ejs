@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>To-do list</title>
+  <link rel="stylesheet" type="text/css" href="/bulma/css/bulma.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+<body>
+  <% if (error!=""){%>
+  <h1> ERROR </h1>
+  <!-- <script type="text/javascript"> alert(<%=error%>);</script> -->
+  <%}%>
+  <!-- Task list -->
+
+  <div class="tile is-ancestor">
+    <div class=" tile is-vertical">
+    <div class="tile is-parent">
+      <% const style= {green:"is-success", yellow:"is-warning",red:"is-danger",blue:"is-info"};%>
+      <% for (let i = 0; i<task.length; i++){ %>
+        <% if (i%4==0 && i>0){ %>
+          </div>
+          <div class="tile is-parent">
+        <% }; %>
+      <div class="tile is-child box" id="child_<%= i %>">
+      <article class="tile is-child notification <%=style[task[i].color]%>">
+          <p class="title"><%= task[i].title; %></p>
+          <p class="subtitle"><%= task[i].description; %></p>
+          <img src="/images/bin.png" id="del_<%= i %>" class="bin" alt='delete'></img>
+          <!-- Delete  Request -->
+
+          <script type="text/javascript">
+            var bin = document.getElementById("del_"+<%=i%>);
+            bin.addEventListener("click",function(){
+            fetch('/'+'<%=task[i]._id %>',{method:"DELETE"});
+            window.location.href ='/';
+            });
+          </script>
+
+      </article>
+      </div>
+      <% }; %>
+  </div>
+  </div>
+
+  </div>  
+
+  <!-- Add a new task -->
+  
+  <form action="/" method="post" class="box">
+  <h1 class="text"><strong>Add a new task :</strong></h1>
+  <br/>
+  <div class="field">
+    <label class="label">Title</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Title" name="title">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Color</label>
+    <div class="control">
+      <div class="select">
+        <select name="color">
+          <option name="0">green</option>
+          <option name="1">yellow</option>
+          <option name="2">red</option>
+          <option name="3">blue</option>
+        </select>
+      </div>
+    </div>
+  </div>
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+      <textarea class="textarea" placeholder="Description" name="description"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="field is-grouped">
+      <div class="control">
+      <button class="button is-link" type="submit" href="/">Submit</button>
+      </div>
+      <div class="control">
+      
+      </div>
+  </div>
+  </form>
+
+
+</body>
+</html>
