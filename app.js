@@ -1,9 +1,10 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
 const Notes = require('./model/model');
 const bodyParser = require('body-parser');
 
-app = express();
+var app = express();
 
 mongoose.connect('mongodb+srv://Test_user:123@firstcluster-zy7kt.mongodb.net/test?retryWrites=true&w=majority', {
         useNewUrlParser: true,
@@ -39,7 +40,7 @@ app.post('/', (req, res, next) => {
 
 app.delete('/:id', (req, res, next) => {
     Notes.deleteOne({ _id: req.params.id })
-        .then(notes => res.status(200))
+        .then(() => res.status(200))
         .catch(error => res.status(400).json({ error }));
 });
 
