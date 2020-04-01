@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const Notes = require('./model/model');
@@ -17,6 +16,7 @@ mongoose.connect('mongodb+srv://Test_user:123@firstcluster-zy7kt.mongodb.net/tes
 app.set('views', './view');
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
+app.use('/mes-styles-bulma', express.static('./node_modules/bulma/css'))
 // app.use(bodyparser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -47,11 +47,7 @@ app.delete('/:id', (req, res, next) => {
 // error if post request failed
 
 app.use((err,req,res) => {
-    Notes.deleteOne({ _id: req.params.id })
-        .then(Notes.find()
-                    .then(notes => res.render('home', { task: notes, error:'Saisissez un titre'}))
-                    .catch(error => res.status(400).json({ error }))
-            );
+    
     });
 
 
